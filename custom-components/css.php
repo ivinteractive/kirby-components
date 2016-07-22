@@ -37,11 +37,17 @@ class CustomCSS extends \Kirby\Component\CSS {
 
     }
 
-    $url = url($url);
+    if(str::startsWith($url, 'async|')):
+      $url = url(str_replace('async|', '', $url));
+      $attr = 'data-href';
+    else:
+      $url = url($url);
+      $attr = 'href';
+    endif;
 
     return html::tag('link', null, array(
       'rel'   => 'stylesheet',
-      'href'  => $url.r(str::contains($url, url::host()), '?v='.site()->assetVersion()->value()),
+      $attr  => $url.r(str::contains($url, url::host()), '?v='.site()->assetVersion()->value()),
       'media' => $media
     ));
 
