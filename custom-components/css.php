@@ -45,11 +45,9 @@ class CustomCSS extends \Kirby\Component\CSS {
       $attr = 'href';
     endif;
 
-    return html::tag('link', null, array(
-      'rel'   => 'stylesheet',
-      $attr  => $url.r(str::contains($url, url::host()), '?v='.site()->assetVersion()->value()),
-      'media' => $media
-    ));
+    $attrValue = $url.r(str::contains($url, url::host()), '?v='.site()->assetVersion()->value());
+
+    return '<link rel="stylesheet" media="'.$media.'" '.$attr.'="'.$attrValue.'" />';
 
   }
 
