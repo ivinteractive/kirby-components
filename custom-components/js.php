@@ -40,7 +40,7 @@ class CustomJS extends \Kirby\Component\JS {
 	$url = url($src);
 
     return html::tag('script', '', array(
-      'src'   => $url.r(str::contains($url, url::host()), '?v='.site()->assetVersion()->value()),
+      'src'   => $url.r(str::contains($url, url::host()), '?v='.md5(site()->assetVersion()->value())),
       'async' => $async
     ));
 
